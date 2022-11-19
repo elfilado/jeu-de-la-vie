@@ -77,7 +77,17 @@ public class Grille {
      * @return true si elle vit, false sinon
      */
     public boolean doCellSurvive ( int i, int j){
-        return nombreDeVoisins(i, j) >= 2;
+        return nombreDeVoisins(i, j) >= 2 && nombreDeVoisins(i, j) <= 3;
+    }
+
+    /**
+     * Determine si une cellule donnee doit survivre
+     * @param i coordonnee ligne
+     * @param j coordonee colonne
+     * @return true si elle vit, false sinon
+     */
+    public boolean doCellNait ( int i, int j){
+        return nombreDeVoisins(i, j) == 3;
     }
 
     /**
@@ -106,7 +116,37 @@ public class Grille {
     public boolean canMoveRight ( int j){
         return j + 1 <= colonnes - 1;
     }
+    public void passerUnTour() {
+        boolean[][] copie = new boolean[lignes][colonnes];
+        for (int i = 0; i < lignes; i++) {
+            for (int j = 0; j < colonnes; j++) {
+                if(!(doCellSurvive(i, j) || doCellNait(i, j))) {
+                    setCell(i, j, copie, false);
+                }
+                else {
+                   setCell(i, j, copie, true);
+                }
+            }
+            setTableau(copie);
+        }
+    }
 
+    /**
+     * Determine si le jeu est fini
+     * @return boolean
+     */
+    public boolean isFinDuJeu() {
+        int n = 0;
+        for (int i = 0; i < lignes; i++) {
+            for (int j = 0; j < colonnes; j++) {
+                if(tableau[i][j]) {
+                    n++;
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     /**
      * Surcharge de la methode toString
@@ -159,9 +199,7 @@ public class Grille {
     }
     public void setTableau (boolean[][] tab){
         for (int i = 0; i < lignes; i++) {
-            for (int j = 0; j < colonnes; j++) {
-                tableau[i][j] = tab[i][j];
-            }
+            if (colonnes >= 0) System.arraycopy(tab[i], 0, tableau[i], 0, colonnes);
         }
     }
 }

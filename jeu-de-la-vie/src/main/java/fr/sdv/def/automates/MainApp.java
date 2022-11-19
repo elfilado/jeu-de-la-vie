@@ -8,12 +8,16 @@ public class MainApp {
         grille.init();
         JeuDeLaVie jeu = new JeuDeLaVie(grille);
 
-        for (int i = 0; i < 5; i++) {
-            System.out.println("Tour" + (i+1) + "\n");
+        while (!(grille.isFinDuJeu())){
+            int i = 1;
+            System.out.println("Tour " + (i) + "\n");
             jeu.afficherGrille();
             jeu.passerUnTour();
             Thread.sleep(2000);
             System.out.print("");
+            i++;
+            System.out.println("Tour " + (i) + "\n");
+            jeu.afficherGrille();
         }
 
         System.out.println( "Ending the game...\n");

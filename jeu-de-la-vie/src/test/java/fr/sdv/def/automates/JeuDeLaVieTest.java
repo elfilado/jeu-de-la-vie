@@ -52,4 +52,30 @@ public class JeuDeLaVieTest{
     public void testCopyColumnLength() {
         assertEquals(10,copie[0].length);
     }
+
+    /**
+     * Test d'un oscillateur "clignotant"
+     */
+    @Test
+    public void testOscillateur () {
+        Grille gtest = new Grille(4,5);
+        boolean[][] test = {
+                {false,false,false,false,false},
+                {false,true,true,true,false},
+                {false,false,false,false,false},
+                {false,false,false,false,false}
+        };
+        gtest.setTableau(test);
+        JeuDeLaVie jeu = new JeuDeLaVie(grille);
+        jeu.passerUnTour();
+
+        boolean[][] expected = {
+                {false,false,true,false,false},
+                {false,false,true,false,false},
+                {false,false,true,false,false},
+                {false,false,false,false,false}
+        };
+
+        assertEquals(expected, jeu.getGrille().getTableau());
+    }
 }
